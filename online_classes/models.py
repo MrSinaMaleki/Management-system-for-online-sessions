@@ -3,10 +3,10 @@ from django.db import models
 
 # Create your models here.
 class User(models.Model):
-    username = models.CharField(unique=True)
+    username = models.CharField(max_length=64, unique=True)
     email = models.EmailField()
-    first_name = models.CharField()
-    last_name = models.CharField()
+    first_name = models.CharField(max_length=32)
+    last_name = models.CharField(max_length=64)
     date_joined = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=False)
 
