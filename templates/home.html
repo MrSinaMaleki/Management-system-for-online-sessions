@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {% for session in sessions %}
+        <p>{{ session.title }}</p>
+        <p>{{ session.description }}</p>
+        <p>{{ session.start_time }}</p>
+        <p>{{ session.end_time }}</p>
+
+        <p>Participants:</p>
+        <ul>
+            {% for p in session.participants.all %}
+                <li>{{ p.first_name }}</li>
+{#                <li>{{ p.id }}</li>#}
+{#                <li>{{ p.first_name }}</li>#}
+            {% endfor %}
+        </ul>
+
+        <hr>
+    {% endfor %}
+
+</body>
+</html>
