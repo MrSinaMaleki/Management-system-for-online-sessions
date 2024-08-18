@@ -5,7 +5,6 @@ from online_classes.models import Session
 
 # Create your views here.
 def all_sessions(request):
-
     # sessions = Session.objects.prefetch_related('participants').all()
     # for session in sessions:
     #     for person in session.participants.all():

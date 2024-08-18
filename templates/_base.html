@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% include 'layout/head.html' %}
+    {% block extra-header %}{% endblock %}
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+{% include 'component/header.html' %}
+<main class="max-w-[1920px] mt-16 py-5 mx-auto min-h-[80vh]">
+    
+    {% block content %}{% endblock %}
+    
+</main>
+<footer>
+    {% include 'component/footer.html' %}
+</footer>
+</body>
+{% include 'layout/script_footer.html' %}
+</html>
