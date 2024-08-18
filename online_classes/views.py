@@ -1,24 +1,22 @@
 from datetime import datetime
 
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from online_classes.forms import SessionForm
 from online_classes.models import Session
 
 
 # Create your views here.
-def all_sessions(request,name=None):
-    # sessions = Session.objects.prefetch_related('participants').all()
-    # for session in sessions:
-    #     for person in session.participants.all():
-    #         print(person.first_name)
-    if name == 'start':
-        sessions = Session.objects.filter(start_time__gt=datetime.now())
-        return render(request, 'home.html', {"sessions": sessions })
-    elif name == 'stop':
-        sessions = Session.objects.filter(end_time__gt=datetime.now())
-        return render(request, 'home.html', {"sessions": sessions})
-    else:
-        return render(request, 'home.html', {"sessions": Session.objects.all()})
+def all_sessions(request):
+    error = None
+    if request.method == "POST":
+        start_time, end_time = request.POST["start"], request.POST["end"]
+        if start_time and end_time and start_time < end_time:
+            sessions = Session.objects.filter(end_time__lte=end_time, start_time__gte=start_time)
+            return render(request, 'home.html', {"sessions": sessions})
+        else:
+            error = "please enter valid date "
+
+    return render(request, 'home.html', {"sessions": Session.objects.all(), "error": error})
 
 
 def create_session(request):
@@ -43,11 +41,18 @@ def edit_session(request, pk):
         my_form = SessionForm(request.POST, instance=obj)
         if my_form.is_valid():
             my_form.save()
-            print("Edited! ")
-
+            return redirect("home")
     return render(request, "session_form.html", {"form": SessionForm(instance=obj)})
 
 
 def detail_session(request, pk):
     obj = get_object_or_404(Session, pk=pk)
-    return render(request, "detail_session.html", {"session": obj })
+    return render(request, "detail_session.html", {"session": obj})
+
+
+def delete_session(request, pk):
+    obj = get_object_or_404(Session, pk=pk)
+    if request.method == "POST":
+        obj.delete()
+        return redirect("home")
+    return render(request, "confirm.html", {"session": obj})

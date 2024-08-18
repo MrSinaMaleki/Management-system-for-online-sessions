@@ -11,6 +11,9 @@
             <li>{{ participant.first_name }}</li>
         </ul>
     {% endfor %}
-    <p>{% lorem 5 %}</p>
+    <p>{% lorem 2 %}</p>
+    
+    <a href="{% url "edit_session" session.pk %}"> update</a>
+    <a href="{% url "delete_session" session.pk %}">delete </a>
 
 {% endblock %}

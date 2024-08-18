@@ -1,9 +1,28 @@
 {% extends '_base.html' %}
 {% block content %}
-    <a href="{% url 'home' name='start' %}">filter start time</a>
+    {#    <a href="{% url 'home' name='start' %}">filter start time</a>#}
+    {#    <br>#}
+    {#    <a href="{% url 'home' name="stop"%}">filter end  time</a>#}
+    {#    <br><br>#}
+    
+        {% if error %}<p class="text-red-800" >{{ error }}</p>{% endif %}
+    
     <br>
-    <a href="{% url 'home' name="stop"%}">filter end  time</a>
-    <br><br>
+    <form method="post" class="flex flex-col gap-3">
+        {% csrf_token %}
+
+        <label>
+            start time
+            <input type="datetime-local" name="start">
+        </label>
+        <label>
+            end time
+            <input type="datetime-local" name="end">
+        </label>
+        <div>
+            <button type="submit">filter</button>
+        </div>
+    </form>
     {% for session in sessions %}
         <a href="{% url 'detail_session' pk=session.pk %}"><p>{{ session.title }}</p></a>
         <p>{{ session.description }}</p>
@@ -13,8 +32,8 @@
         <ul>
             {% for p in session.participants.all %}
                 <li>{{ p.first_name }}</li>
-{#                <li>{{ p.id }}</li>#}
-{#                <li>{{ p.first_name }}</li>#}
+                {#                <li>{{ p.id }}</li>#}
+                {#                <li>{{ p.first_name }}</li>#}
             {% endfor %}
         </ul>
 
