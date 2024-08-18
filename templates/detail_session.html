@@ -1,0 +1,16 @@
+{% extends '_base.html' %}
+{% block title %}
+    detail
+{% endblock %}
+{% block content %}
+    <h1>{{ session.title }}</h1>
+    <p>{{ session.start_time }}</p>
+    <p>{{ session.end_time }}</p>
+    {% for participant in session.participants.all %}
+        <ul>
+            <li>{{ participant.first_name }}</li>
+        </ul>
+    {% endfor %}
+    <p>{% lorem 5 %}</p>
+
+{% endblock %}

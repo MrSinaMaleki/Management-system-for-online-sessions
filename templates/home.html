@@ -1,13 +1,14 @@
 {% extends '_base.html' %}
 {% block content %}
-	
-
+    <a href="{% url 'home' name='start' %}">filter start time</a>
+    <br>
+    <a href="{% url 'home' name="stop"%}">filter end  time</a>
+    <br><br>
     {% for session in sessions %}
-        <p>{{ session.title }}</p>
+        <a href="{% url 'detail_session' pk=session.pk %}"><p>{{ session.title }}</p></a>
         <p>{{ session.description }}</p>
         <p>{{ session.start_time }}</p>
         <p>{{ session.end_time }}</p>
-
         <p>Participants:</p>
         <ul>
             {% for p in session.participants.all %}
