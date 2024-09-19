@@ -4,9 +4,9 @@
     {#    <br>#}
     {#    <a href="{% url 'home' name="stop"%}">filter end  time</a>#}
     {#    <br><br>#}
-    
-        {% if error %}<p class="text-red-800" >{{ error }}</p>{% endif %}
-    
+
+    {% if error %}<p class="text-red-800">{{ error }}</p>{% endif %}
+
     <br>
     <form method="post" class="flex flex-col gap-3">
         {% csrf_token %}
@@ -23,7 +23,33 @@
             <button type="submit">filter</button>
         </div>
     </form>
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                    <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-6 w-6 shrink-0 stroke-current"
+                            fill="none"
+                            viewBox="0 0 24 24">
+                        <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+
+                    {{ message }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+
+
     {% for session in sessions %}
+        <h1>Session:</h1>
         <a href="{% url 'detail_session' pk=session.pk %}"><p>{{ session.title }}</p></a>
         <p>{{ session.description }}</p>
         <p>{{ session.start_time }}</p>
